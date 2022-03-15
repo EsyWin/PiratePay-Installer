@@ -33,7 +33,7 @@ cd ~
 wget --no-check-certificate --content-disposition https://github.com/PirateNetwork/pirate/releases/download/v5.4.2/pirate-qt-ubuntu1804-v5.4.2.deb -P /home/$USER/
 
 # install Pirate Wallet
-dpkg -i pirate-qt-ubuntu1804-v5.4.2.deb
+sudo dpkg -i pirate-qt-ubuntu1804-v5.4.2.deb
 
 # fetch zcash parameters
 /home/$USER/komodo/fetch-params.sh
