@@ -22,15 +22,19 @@ FLUSH PRIVILEGES;
 QUIT;
 EOF
 # setting fix
-sudo sed -i /etc/php/7.3/fpm/php.ini -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g'
+sudo sed -i /etc/php/7.3/fpm/php.ini 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g'
 # add php to system boot
 sudo systemctl restart php7.3-fpm
 # download our config file to replace default
 wget https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/default -P /home/$USER
 sudo rm -f /etc/nginx/sites-available/default
 sudo mv default /etc/nginx/sites-available/default
+# ensure nginx install & reload nginx deamon
+sudo nginx -t
+sudo systemctl reload nginx
 # replace Redis password
-sudo sed -i /etc/redis/redis.conf -e "s/# requirepass foobared/requirepass $PASS_REDIS/g"
+sudo sed -i /etc/redis/redis.conf "s/# requirepass foobared/requirepass $PASS_REDIS/g"
+sudo systemctl restart redis.service
 cd ~
 # download composer
 curl -sS https://getcomposer.org/installer | php
@@ -51,9 +55,12 @@ composer install --no-dev
 # create .env file from .env.example
 cp .env.example .env
 # replace respectives occurences 
-sed -i "5i APP_URL=localhost" .env
-sed -i "10i PIRATE_PASSWORD=$PASS_WALLET" .env
-sed -i "23i DB_PASSWORD=$PASS_MYSQL" .env
-sed -i "32i REDIS_PASSWORD=$PASS_REDIS" .env
+sudo sed -i "5i APP_URL=localhost" .env
+sudo sed -i "10i PIRATE_PASSWORD=$PASS_WALLET" .env
+sudo sed -i "23i DB_PASSWORD=$PASS_MYSQL" .env
+sudo sed -i "32i REDIS_PASSWORD=$PASS_REDIS" .env
 # migrate database & generate encryption keys
 php artisan migrate && php artisan key:generate && php artisan passport:install --length=512 --force
+# start piratechain deamon & sync to latest block
+cd
+/home/$USER/pirate/komodod -ac_name=PIRATE -ac_supply=0 -ac_reward=25600000000 -ac_halving=77777 -ac_private=1 &
