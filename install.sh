@@ -2,10 +2,9 @@
 
 # prompt user
 echo "Enter your static ip if you arrr on VPS (just press enter if you're on localhost)"
-read $APP_URL
+read APP_URL
 if [ $APP_URL -z ]
-then
-    $APP_URL="localhost"
+then $APP_URL="localhost"
 fi
 
 # update system
