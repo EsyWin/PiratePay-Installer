@@ -42,7 +42,7 @@ Content: [your public ip]
 TTL: Auto
 ```
 
-This should work out of the box for VPS hosting, but if you host this at home for your subdomain you will need to forward port 80 at least through your network router, and you may need a 3rd party service like [DynDNS](https://account.dyn.com/) or [No-IP](https://www.noip.com/) to get a static IP for your device.
+This should work out of the box for VPS hosting, but if you host this at home, you might need to forward port 80 at least through your network router, and you may need a 3rd party service like [DynDNS](https://account.dyn.com/) or [No-IP](https://www.noip.com/) to get a static IP for your device.
 
 ## Security note
 
