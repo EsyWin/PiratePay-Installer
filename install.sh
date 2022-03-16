@@ -1,26 +1,26 @@
 #!/bin/bash
-# sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository ppa:ondrej/php
 # update system
-# sudo apt update 
-# sudo apt upgrade -y
+sudo apt update 
+sudo apt upgrade -y
 # install git, wget, curl, openssl and software-properties-common
-# sudo apt install screen wget openssl redis-server supervisor nginx mysql-server php7.3 php7.3-fpm php7.3-mysql php7.3-mbstring php7.3-imagick php7.3-xml php7.3-bcmath php7.3-intl php7.3-zip -y
+sudo apt install screen wget openssl redis-server supervisor nginx mysql-server php7.3 php7.3-fpm php7.3-mysql php7.3-mbstring php7.3-imagick php7.3-xml php7.3-bcmath php7.3-intl php7.3-zip -y
 # sudo mysql_secure_installation -y
 # generate three high-difficulty passwords
-# PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
-# PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
-# PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
+PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
+PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
+PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
 # replace rpcpassword & rpcuser
-# sed -i "2i rpcpassword=$PASS_WALLET" /home/$USER/.komodo/PIRATE/PIRATE.conf
-# sed -i "1i rpcuser=piratepay" /home/$USER/.komodo/PIRATE/PIRATE.conf
-# cd ~
+sed -i "2i rpcpassword=$PASS_WALLET" /home/$USER/.komodo/PIRATE/PIRATE.conf
+sed -i "1i rpcuser=piratepay" /home/$USER/.komodo/PIRATE/PIRATE.conf
+cd ~
 # root into mysql, create database 'piratepay' grant all to piratepay
-# mysql -u root -p $PASS_MYSQL << EOF
-# CREATE DATABASE piratepay DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-# GRANT ALL ON piratepay.* TO 'piratepay'@'localhost' IDENTIFIED BY '$PASS_MYSQL';
-# FLUSH PRIVILEGES;
-# QUIT;
-# EOF
+mysql -u root -p$PASS_MYSQL << EOF
+CREATE DATABASE piratepay DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+GRANT ALL ON piratepay.* TO 'piratepay'@'localhost' IDENTIFIED BY '$PASS_MYSQL';
+FLUSH PRIVILEGES;
+QUIT;
+EOF
 # setting fix
 sudo sed -i /etc/php/7.3/fpm/php.ini 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g'
 # add php to system boot
