@@ -2,27 +2,23 @@
 
 Solution to install [PiratePay](https://github.com/CryptocurrencyCheckout/PiratePay) on [Ubuntu 20.04](https://ubuntu.com/download) (Desktop/Server)
 
-## Usage
+## Requirements
 
-Basic install assuming you already have the Pirate deamon :
+You need the [pirate deamon](https://github.com/PirateNetwork/pirate) and curl to run the one-liner install script below : `sudo apt install curl`
+If you don't have the deamon yet, you can run this one-liner to install dependencies and build from source :
+`sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/get-pirate.sh | bash `
+
+## Install
 
 ```bash
 sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/install.sh | bash
 ```
 
-Run this to build the Pirate deamon from source, download bootstrap and sync :
-
-```bash
-sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/get-pirate.sh | bash
-```
-
 Run this if you're on a system without swap file :
 
-```bash
-sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/create-swap.sh | bash
-```
+## Subdomain Install
 
-Run this to install on your website subdomain after Basic install
+Run this after install :
 
 ```bash
 sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/subdomain.sh | bash
@@ -42,7 +38,7 @@ Content: [your public ip]
 TTL: Auto
 ```
 
-This should work out of the box for VPS hosting, but if you host this at home, you might need to forward port 80 at least through your network router, and you may need a 3rd party service like [DynDNS](https://account.dyn.com/) or [No-IP](https://www.noip.com/) to get a static IP for your device.
+This should work out of the box for **VPS**, but if you host this at home, you might need to forward ports through your network router, and you may need a 3rd party service like [DynDNS](https://account.dyn.com/) or [No-IP](https://www.noip.com/) to get a static IP for your device.
 
 ## Security note
 
