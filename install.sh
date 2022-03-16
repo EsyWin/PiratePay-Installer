@@ -1,7 +1,8 @@
 #!/bin/bash
 sudo add-apt-repository ppa:ondrej/php
 # update system
-sudo apt update && sudo apt upgrade
+sudo apt update 
+sudo apt upgrade
 # install git, wget, curl, openssl and software-properties-common
 sudo apt install screen wget openssl redis-server supervisor nginx mysql-server php7.3 php7.3-fpm php7.3-mysql php7.3-mbstring php7.3-imagick php7.3-xml php7.3-bcmath php7.3-intl php7.3-zip -y
 sudo mysql_secure_installation -y
@@ -45,7 +46,9 @@ sudo git clone https://github.com/CryptocurrencyCheckout/PiratePay.git
 cd PiratePay
 sudo sed -i horizon.conf "s/user=ubuntu/user=$USER/g"
 sudo mv horizon.conf /etc/supervisor/conf.d/horizon.conf
-sudo supervisorctl reread && sudo supervisorctl update && sudo supervisorctl start horizon
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start horizon
 # a bunch of chmod
 sudo chown -R www-data:ubuntu /var/www/PiratePay
 sudo find /var/www/PiratePay -type f -exec chmod 664 {} \;
