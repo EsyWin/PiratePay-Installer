@@ -43,12 +43,9 @@ This should work out of the box for **VPS**, but if you host this at home, you m
 
 ## Security note
 
-This method is convinient but can have security flaws in case of account or publishing keys compromision
+This install method is convinient but can have severe security issues in case of maintainter account or publishing keys compromision.
+Installing \*.deb package is much safer, might eventually get done once I have this app working.
 
 ## License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Software is distributed under [MIT License]() see [LICENCE.md](https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/LICENCE.md) for more information.
