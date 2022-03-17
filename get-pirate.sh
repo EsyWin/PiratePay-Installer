@@ -5,4 +5,4 @@ cd ~
 git clone https://github.com/PirateNetwork/pirate --branch master
 cd pirate
 ./zcutil/fetch-params.sh
-./zcutil/build.sh -j$(nproc - 2)
+./zcutil/build.sh -j$(expr $(nproc) - 1)
