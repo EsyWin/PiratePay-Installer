@@ -12,8 +12,8 @@ PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
 # pass answers to prompts
 { echo 'Y';
   echo '1';
-  echo $PASS_MYSQL;
-  echo $PASS_MYSQL;
+  echo '$PASS_MYSQL';
+  echo '$PASS_MYSQL';
   echo 'Y';
   echo 'Y';
   echo 'Y';
@@ -32,7 +32,7 @@ FLUSH PRIVILEGES;
 QUIT;
 EOF
 # setting fix
-# sudo sed -i /etc/php/7.3/fpm/php.ini 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g'
+sudo sed -i /etc/php/7.3/fpm/php.ini "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g"
 # add php to system boot
 sudo systemctl restart php7.3-fpm
 # download our config file to replace default
