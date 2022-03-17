@@ -48,4 +48,4 @@ Installing \*.deb package is much safer, might eventually get done once I have t
 
 ## License
 
-Software is distributed under [MIT License]() see [LICENCE.md](https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/LICENCE.md) for more information.
+Software is distributed under [MIT License](https://mit-license.org/) see [LICENCE.md](https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/LICENCE.md) for more information.
