@@ -6,21 +6,22 @@ Solution to install [PiratePay](https://github.com/CryptocurrencyCheckout/Pirate
 
 You need the [pirate deamon](https://github.com/PirateNetwork/pirate) and curl to run the one-liner install script below : `sudo apt install curl`
 If you don't have the deamon yet, you can run this one-liner to install dependencies and build from source :
-`sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/get-pirate.sh | bash `
+
+```shell
+sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/get-pirate.sh | bash
+```
 
 ## Install
 
-```bash
+```shell
 sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/install.sh | bash
 ```
-
-Run this if you're on a system without swap file :
 
 ## Subdomain Install
 
 Run this after install :
 
-```bash
+```shell
 sudo curl -sSf https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/subdomain.sh | bash
 ```
 
