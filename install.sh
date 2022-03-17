@@ -10,10 +10,11 @@ PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
 # pass answers to prompts
-{ echo 'Y';
+{ 
+  echo $PASS_MYSQL;
+  echo $PASS_MYSQL;
+  echo 'Y';
   echo '1';
-  echo '$PASS_MYSQL';
-  echo '$PASS_MYSQL';
   echo 'Y';
   echo 'Y';
   echo 'Y';
