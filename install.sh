@@ -6,17 +6,17 @@ sudo apt install screen wget openssl redis-server supervisor nginx mysql-server 
 PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
-sudo mysql_secure_installation 2>/dev/null <<EOF
-
-n;
-y;
-$PASS_MYSQL;
-$PASS_MYSQL;
-y;
-y;
-y;
-y;
-
+# Make sure that NOBODY can access the server without a password
+mysql -e "UPDATE mysql.user SET Password = PASSWORD('$PASS_MYSQL') WHERE User = 'root'"
+# Kill the anonymous users
+mysql -e "DROP USER ''@'localhost'"
+# Because our hostname varies we'll use some Bash magic here.
+mysql -e "DROP USER ''@'$(hostname)'"
+# Kill off the demo database
+mysql -e "DROP DATABASE test"
+# Make our changes take effect
+mysql -e "FLUSH PRIVILEGES"
+# Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
 EOF
 
 mysql -u root -p$$PASS_MYSQL << EOF
