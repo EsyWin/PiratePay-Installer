@@ -44,11 +44,11 @@ cd /var/www
 sudo git clone https://github.com/CryptocurrencyCheckout/PiratePay.git
 cd PiratePay
 sudo cp .env.example .env
-sudo sed -i "5i APP_URL=localhost" .env
-sudo sed -i "10i PIRATE_PASSWORD=$PASS_WALLET" .env
-sudo sed -i "23i DB_PASSWORD=$PASS_MYSQL" .env
-sudo sed -i "32i REDIS_PASSWORD=$PASS_REDIS" .env
-sudo sed -i "6i user=$USER" horizon.conf
+sudo sed -i 's/APP_URL=YOUR WEBSITE IP OR URL <-----/APP_URL=localhost/g' .env
+sudo sed -i 's/PIRATE_PASSWORD= YOUR PIRATE RPC PASSWORD <-----/PIRATE_PASSWORD=$PASS_WALLET/g' .env
+sudo sed -i 's/DB_PASSWORD= YOUR MYSQL PASSWORD <-----/DB_PASSWORD=$PASS_MYSQL/g' .env
+sudo sed -i 's/REDIS_PASSWORD=YOUR REDIS PASSWORD <-----/REDIS_PASSWORD=$PASS_REDIS/g' .env
+sudo sed -i 's/user=ubuntu/user=$USER/g' horizon.conf
 sudo mv horizon.conf /etc/supervisor/conf.d/horizon.conf
 sudo supervisorctl reread
 sudo supervisorctl update
