@@ -6,7 +6,7 @@ sudo apt install screen wget openssl redis-server supervisor nginx mysql-server 
 PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
-sudo mysql_secure_installation 2>/dev/null <<MSI
+sudo mysql_secure_installation 2>/dev/null <<EOF
 
 n
 y
@@ -17,9 +17,9 @@ y
 y
 y
 
-MSI
+EOF
 
-mysql -u root -p${$PASS_MYSQL}<< EOF
+mysql -u root -p$$PASS_MYSQL << EOF
 CREATE DATABASE piratepay DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 GRANT ALL ON piratepay.* TO 'piratepay'@'localhost' IDENTIFIED BY '${PASS_MYSQL}';
 FLUSH PRIVILEGES;
