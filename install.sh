@@ -10,8 +10,8 @@ sudo mysql_secure_installation 2>/dev/null <<EOF
 
 n;
 y;
-${PASS_MYSQL};
-${PASS_MYSQL};
+$PASS_MYSQL;
+$PASS_MYSQL;
 y;
 y;
 y;
