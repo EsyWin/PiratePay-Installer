@@ -7,9 +7,11 @@ sudo apt install screen wget openssl redis-server supervisor nginx mysql-server 
 PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
+# read user password for root on mysql
+read password
 # create *.sql mysql_secure_installation
 cat << EOF > mysql_secure_installation.sql
-UPDATE mysql.user SET Password=PASSWORD('${PASSWORD}') WHERE User='root';
+UPDATE mysql.user SET Password=PASSWORD('${password}') WHERE User='root';
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DROP DATABASE IF EXISTS test;
