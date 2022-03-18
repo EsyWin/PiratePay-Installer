@@ -8,14 +8,14 @@ PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
 sudo mysql_secure_installation 2>/dev/null <<EOF
 
-n
-y
-${PASS_MYSQL}
-${PASS_MYSQL}
-y
-y
-y
-y
+n;
+y;
+${PASS_MYSQL};
+${PASS_MYSQL};
+y;
+y;
+y;
+y;
 
 EOF
 
