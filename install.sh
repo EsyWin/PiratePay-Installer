@@ -1,8 +1,14 @@
 #!/bin/bash
-sudo add-apt-repository ppa:ondrej/php
+USER=$(whoami)
+add-apt-repository ppa:ondrej/php
 sudo apt update 
 sudo apt upgrade -y
 sudo apt install screen wget openssl redis-server supervisor nginx mysql-server php7.3 php7.3-fpm php7.3-mysql php7.3-mbstring php7.3-imagick php7.3-xml php7.3-bcmath php7.3-intl php7.3-zip -y
+# move to home directory
+cd ~
+# login as root
+sudo -i
+# create 3 high-dif passwords
 PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
@@ -16,26 +22,28 @@ DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
 FLUSH PRIVILEGES;
 EOF
 # install
-sudo mysql -sfu root -p $PASS_MYSQL < "mysql_secure_installation.sql"
+mysql -sfu root < "mysql_secure_installation.sql"
 # create piratepay database with auth root
-sudo mysql -u root -p$PASS_MYSQL << EOF
+mysql -u root -p $PASS_MYSQL << EOF
 CREATE DATABASE piratepay DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 GRANT ALL ON piratepay.* TO 'piratepay'@'localhost' IDENTIFIED BY '${PASS_MYSQL}';
 FLUSH PRIVILEGES;
-QUIT;
 EOF
-
+# replace 
 sed -i "2i rpcpassword=$PASS_WALLET" /home/$USER/.komodo/PIRATE/PIRATE.conf
 sed -i "1i rpcuser=piratepay" /home/$USER/.komodo/PIRATE/PIRATE.conf
-sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.3/fpm/php.ini 
-sudo systemctl restart php7.3-fpm
+sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/7.3/fpm/php.ini 
+systemctl restart php7.3-fpm
 wget https://raw.githubusercontent.com/EsyWin/PiratePay-Installer/main/default -P /home/$USER
-sudo rm -f /etc/nginx/sites-available/default
-sudo mv default /etc/nginx/sites-available/default
-sudo nginx -t
-sudo systemctl reload nginx
-sudo sed -i 's/# requirepass foobared/requirepass $PASS_REDIS/g' /etc/redis/redis.conf 
-sudo systemctl restart redis.service
+rm -f /etc/nginx/sites-available/default
+mv default /etc/nginx/sites-available/default
+nginx -t
+systemctl reload nginx
+sed -i 's/# requirepass foobared/requirepass $PASS_REDIS/g' /etc/redis/redis.conf 
+systemctl restart redis.service
+# login as non-root
+su $USER
+# resume install as non-root
 cd ~
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
