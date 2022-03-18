@@ -6,20 +6,19 @@ sudo apt install screen wget openssl redis-server supervisor nginx mysql-server 
 PASS_WALLET=$(openssl rand 60 | openssl base64 -A)
 PASS_MYSQL=$(openssl rand 60 | openssl base64 -A)
 PASS_REDIS=$(openssl rand 60 | openssl base64 -A)
-# Make sure that NOBODY can access the server without a password
-mysql -e "UPDATE mysql.user SET Password = PASSWORD('$PASS_MYSQL') WHERE User = 'root'"
-# Kill the anonymous users
-mysql -e "DROP USER ''@'localhost'"
-# Because our hostname varies we'll use some Bash magic here.
-mysql -e "DROP USER ''@'$(hostname)'"
-# Kill off the demo database
-mysql -e "DROP DATABASE test"
-# Make our changes take effect
-mysql -e "FLUSH PRIVILEGES"
-# Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
+# create *.sql mysql_secure_installation
+cat << EOF > mysql_secure_installation.sql
+UPDATE mysql.user SET Password=PASSWORD('$PASS_MYSQL') WHERE User='root';
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+FLUSH PRIVILEGES;
 EOF
-
-mysql -u root -p$$PASS_MYSQL << EOF
+# install
+sudo mysql -sfu root -p $PASS_MYSQL < "mysql_secure_installation.sql"
+# create piratepay database with auth root
+sudo mysql -u root -p$PASS_MYSQL << EOF
 CREATE DATABASE piratepay DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 GRANT ALL ON piratepay.* TO 'piratepay'@'localhost' IDENTIFIED BY '${PASS_MYSQL}';
 FLUSH PRIVILEGES;
